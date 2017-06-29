@@ -22,4 +22,12 @@
         android:text="Tweet"
         android:onClick="sendMessage"/>
 
+    <TextView
+        android:id="@+id/tvCharCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etTweetBody"
+        android:text="Chars Remaining: 140/140"/>
+
 </RelativeLayout>

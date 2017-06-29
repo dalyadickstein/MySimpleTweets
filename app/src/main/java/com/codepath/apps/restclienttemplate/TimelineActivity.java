@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,11 +25,11 @@ public class TimelineActivity extends AppCompatActivity {
 
     private final int REQUEST_CODE = 42;
 
+    private SwipeRefreshLayout swipeContainer;
     private TwitterClient client;
     private TweetAdapter tweetAdapter;
     private RecyclerView rvTweets;
     ArrayList<Tweet> tweets;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,21 @@ public class TimelineActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient(); // initialize the client
         tweets = new ArrayList<>(); // initialize the ArrayList (data source)
         tweetAdapter = new TweetAdapter(tweets); // construct the adapter from this data source
+
+        // SwipeRefreshLayout setup
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateTimeline();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light);
 
         // RecyclerView setup (layout manager, use adapter)
         rvTweets = (RecyclerView) findViewById(R.id.rvTweet); // find the RecyclerView
@@ -74,7 +90,7 @@ public class TimelineActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//                Log.d("TwitterClient", response.toString());
+                tweetAdapter.clear();
                 // for each entry in response, deserialize the JSON object
                 for (int i = 0; i < response.length(); i++) {
                     // convert each object to a Tweet model
@@ -84,6 +100,7 @@ public class TimelineActivity extends AppCompatActivity {
                         Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
                         tweets.add(tweet);
                         tweetAdapter.notifyItemInserted(tweets.size() - 1);
+                        swipeContainer.setRefreshing(false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
