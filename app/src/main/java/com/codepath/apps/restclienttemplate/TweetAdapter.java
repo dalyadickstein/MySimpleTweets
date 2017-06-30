@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,6 +79,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         TextView tvScreenName;
         TextView tvBody;
         TextView tvRelativeDate;
+        ImageButton btReply;
 
         // constructor takes in an inflated layout
         public ViewHolder(View itemView) {
@@ -88,6 +90,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             this.tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
             this.tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
             this.tvRelativeDate = (TextView) itemView.findViewById(R.id.tvRelativeDate);
+            this.btReply = (ImageButton) itemView.findViewById(R.id.btReply);
         }
 
     }
