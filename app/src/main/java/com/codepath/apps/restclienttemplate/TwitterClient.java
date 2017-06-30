@@ -68,7 +68,7 @@ public class TwitterClient extends OAuthBaseClient {
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("status", message);
-        if (!inReplyToStatusId.equals("")) {
+        if (!(inReplyToStatusId.equals(""))) {
             params.put("in_reply_to_status_id", inReplyToStatusId);
         }
 		client.post(apiUrl, params, handler);

@@ -43,7 +43,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/tvRelativeDate"
             android:layout_toEndOf="@+id/tvUserName"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="ScreenName"/>
 
         <TextView

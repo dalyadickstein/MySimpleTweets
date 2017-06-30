@@ -22,7 +22,7 @@ public class ComposeActivity extends AppCompatActivity {
     private TwitterClient client;
     private TextView tvCharCount;
     private EditText etTweetBody;
-    private String inReplyToStatusId = "";
+    private String inReplyToStatusId;
 
     private final TextWatcher TweetEditorWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -49,9 +49,11 @@ public class ComposeActivity extends AppCompatActivity {
         tvCharCount = (TextView) findViewById(R.id.tvCharCount);
 
         String replyingToScreenName = getIntent().getStringExtra("screenName");
-        if (replyingToScreenName != "") {
+        if (!replyingToScreenName.equals("")) {
             etTweetBody.setText(replyingToScreenName);
             inReplyToStatusId = getIntent().getStringExtra("inReplyToStatusId");
+        } else {
+            inReplyToStatusId = "";
         }
     }
 
