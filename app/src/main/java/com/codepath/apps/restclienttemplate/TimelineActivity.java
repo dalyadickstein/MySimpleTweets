@@ -9,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -82,9 +80,11 @@ public class TimelineActivity extends AppCompatActivity {
         }
     }
 
-    public void reply(View view) {
-        Toast.makeText(this, "Reply!", Toast.LENGTH_LONG).show();
-    }
+//    public void reply(View view) {
+//        TextView tvTweet = (TextView) view.getRootView().findViewById(R.id.tvScreenName);
+//        String screenName = tvTweet.getText().toString();
+//        Toast.makeText(this, screenName, Toast.LENGTH_LONG).show();
+//    }
 
     private void populateTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
@@ -142,6 +142,7 @@ public class TimelineActivity extends AppCompatActivity {
     // launch sub-activity ComposeActivity
     public void launchComposeView() {
         Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+        i.putExtra("screenName", "");
         startActivityForResult(i, REQUEST_CODE);
     }
 

@@ -1,7 +1,9 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +53,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvBody.setText(tweet.body);
         holder.tvRelativeDate.setText(tweet.relativeDate);
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
+        holder.addListenerOnReplyClick(tweet, holder.btReply);
+        holder.addListenerOnFavoriteClick(tweet, holder.btFavorite);
     }
 
     @Override
@@ -71,7 +75,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     }
 
     // create ViewHolder class
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         // track view objects
         ImageView ivProfileImage;
@@ -80,6 +84,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         TextView tvBody;
         TextView tvRelativeDate;
         ImageButton btReply;
+        ImageButton btFavorite;
+        ImageButton btRetweet;
 
         // constructor takes in an inflated layout
         public ViewHolder(View itemView) {
@@ -91,6 +97,30 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             this.tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
             this.tvRelativeDate = (TextView) itemView.findViewById(R.id.tvRelativeDate);
             this.btReply = (ImageButton) itemView.findViewById(R.id.btReply);
+            this.btFavorite = (ImageButton) itemView.findViewById(R.id.btFavorite);
+            this.btRetweet = (ImageButton) itemView.findViewById(R.id.btRetweet);
+        }
+
+        public void addListenerOnReplyClick(final Tweet tweet, ImageButton replyButton) {
+            replyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, ComposeActivity.class);
+                    i.putExtra("screenName", tvScreenName.getText().toString());
+                    i.putExtra("inReplyToStatusId", Long.toString(tweet.uid));
+                    ((TimelineActivity)context).startActivityForResult(i, 42);
+                }
+            });
+        }
+
+        public void addListenerOnFavoriteClick(final Tweet tweet, ImageButton favoriteButton) {
+            favoriteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Long tweetId = tweet.uid;
+                    Log.d("TweetAdapter", String.valueOf(tweetId));
+                }
+            });
         }
 
     }
