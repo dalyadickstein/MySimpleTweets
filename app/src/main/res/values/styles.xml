@@ -11,6 +11,15 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">#FF000000</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">#FF404040</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">#FFA133E5</item>
+        <item name="android:windowBackground">@color/background</item>
+
     </style>
 
 </resources>
